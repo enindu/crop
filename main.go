@@ -17,7 +17,7 @@
 //
 // Usage:
 //
-//	crop [path] [width] [height]
+//	crop [width] [height] [path]
 package main
 
 import (
@@ -30,27 +30,29 @@ import (
 	"strings"
 
 	"golang.org/x/image/draw"
+
+	_ "image/jpeg"
 )
 
 func main() {
 	if len(os.Args) != 4 {
-		fmt.Printf("usage: %s [path] [width] [height]\n", os.Args[0])
+		fmt.Printf("usage: %s [width] [height] [path]\n", os.Args[0])
 		return
 	}
 
-	inputFilePath := os.Args[1]
-
-	targetWidth, err := strconv.ParseInt(os.Args[2], 10, 0)
+	targetWidth, err := strconv.ParseInt(os.Args[1], 10, 0)
 	if err != nil {
 		fmt.Printf("define target width: %q\n", err)
 		return
 	}
 
-	targetHeight, err := strconv.ParseInt(os.Args[3], 10, 0)
+	targetHeight, err := strconv.ParseInt(os.Args[2], 10, 0)
 	if err != nil {
 		fmt.Printf("define target height: %q\n", err)
 		return
 	}
+
+	inputFilePath := os.Args[3]
 
 	inputFile, err := os.Open(inputFilePath)
 	if err != nil {

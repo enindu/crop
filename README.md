@@ -15,5 +15,5 @@ go install github.com/enindu/crop
 Here is an example of how to use Crop.
 
 ```
-crop [path] [type <jpg|png>] [width] [height]
+crop [width] [height] [path]
 ```
