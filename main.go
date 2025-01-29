@@ -53,6 +53,9 @@ func main() {
 	}
 
 	inputFilePath := os.Args[3]
+	inputFileDirectory := filepath.Dir(inputFilePath)
+	inputFileName := filepath.Base(inputFilePath)
+	inputFileExtension := filepath.Ext(inputFilePath)
 
 	inputFile, err := os.Open(inputFilePath)
 	if err != nil {
@@ -94,11 +97,9 @@ func main() {
 
 	draw.ApproxBiLinear.Scale(resizedImage, resizedImage.Bounds(), croppedImage, croppedImage.Bounds(), draw.Over, nil)
 
-	inputFileDirectory := filepath.Dir(inputFilePath)
-	inputFileName := filepath.Base(inputFilePath)
-	inputFileExtension := filepath.Ext(inputFilePath)
+	outputFilePath := fmt.Sprintf("%s/%s_%dx%d.png", inputFileDirectory, strings.TrimSuffix(inputFileName, inputFileExtension), targetWidth, targetHeight)
 
-	outputFile, err := os.Create(fmt.Sprintf("%s/%s-%dx%d.png", inputFileDirectory, strings.TrimSuffix(inputFileName, inputFileExtension), targetWidth, targetHeight))
+	outputFile, err := os.Create(outputFilePath)
 	if err != nil {
 		fmt.Printf("create file: %q\n", err)
 		return
