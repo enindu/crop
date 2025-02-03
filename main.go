@@ -95,7 +95,7 @@ func main() {
 
 	resizedImage := image.NewRGBA(image.Rect(0, 0, int(targetWidth), int(targetHeight)))
 
-	draw.ApproxBiLinear.Scale(resizedImage, resizedImage.Bounds(), croppedImage, croppedImage.Bounds(), draw.Over, nil)
+	draw.CatmullRom.Scale(resizedImage, resizedImage.Bounds(), croppedImage, croppedImage.Bounds(), draw.Over, nil)
 
 	outputFilePath := fmt.Sprintf("%s/%s_%dx%d.png", inputFileDirectory, strings.TrimSuffix(inputFileName, inputFileExtension), targetWidth, targetHeight)
 
@@ -107,7 +107,11 @@ func main() {
 
 	defer outputFile.Close()
 
-	err = png.Encode(outputFile, resizedImage)
+	encoder := &png.Encoder{
+		CompressionLevel: png.BestCompression,
+	}
+
+	err = encoder.Encode(outputFile, resizedImage)
 	if err != nil {
 		fmt.Printf("encode image: %q\n", err)
 		return
