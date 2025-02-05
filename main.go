@@ -74,14 +74,14 @@ func main() {
 	inputWidth := inputImage.Bounds().Dx()
 	inputHeight := inputImage.Bounds().Dy()
 	inputAspectRatio := float64(inputWidth) / float64(inputHeight)
-	targetAspectRation := float64(targetWidth) / float64(targetHeight)
+	targetAspectRatio := float64(targetWidth) / float64(targetHeight)
 	cropWidth := inputWidth
 	cropHeight := inputHeight
 
-	if inputAspectRatio > targetAspectRation {
-		cropWidth = int(float64(cropHeight) * targetAspectRation)
+	if inputAspectRatio > targetAspectRatio {
+		cropWidth = int(float64(cropHeight) * targetAspectRatio)
 	} else {
-		cropHeight = int(float64(cropWidth) / targetAspectRation)
+		cropHeight = int(float64(cropWidth) / targetAspectRatio)
 	}
 
 	left := (inputWidth - cropWidth) / 2
